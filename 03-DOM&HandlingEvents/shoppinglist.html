@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Shopping List</title>
     <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
-    <h1>Shopping List</h1>
-    <p>
-        New item: <input type="text" name="item">
-        <button type="button">Add</button>
-    </p>
-    <h3>List of items</h3>
-    <ol>
-        <li>cooking oil</li>
-        <li>breakfast cereal</li>
-        <li>bread</li>
-    </ol>
-
-    <script>
-    	// a JavaScript code here ...
-
-    </script>
+<h1>Shopping List</h1>
+<p>
+    New item:<label><input type="text" name="item"></label>
+    <button type="button" onclick="addItem()">Add</button>
+</p>
+<h3>List of items</h3>
+<ol>
+    <li>cooking oil</li>
+    <li>breakfast cereal</li>
+    <li>bread</li>
+</ol>
 </body>
-
+<script>
+    function addItem() {
+        let itemValue = document.getElementsByName('item').item(0).value;
+        if(!itemValue) {
+            return;
+        }
+        let liItem = document.createElement('li');
+        liItem.innerText = itemValue;
+        document.getElementsByTagName('ol').item(0).appendChild(liItem);
+    }
+    $('ol').on('dblclick', 'li',(function () {
+        $(this).remove();
+    }));
+</script>
 </html>
