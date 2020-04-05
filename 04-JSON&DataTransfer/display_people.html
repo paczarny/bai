@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of people</title>
+</head>
+<body>
+    <button onclick="fetchList()">Display People</button>
+    <ol type="1" id="listOfPeople"></ol>
+</body>
+<script>
+    function fetchList() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://raw.githubusercontent.com/paczarny/bai/solutions/04-JSON%26DataTransfer/people.json');
+        xhr.onreadystatechange = function () { display(this) }
+        xhr.send();
+    }
+    function display(r) {
+        if(r.readyState === r.DONE && r.status === 200) {
+            let people = JSON.parse(r.responseText);
+            addToList(people);
+        }
+    }
+    function addToList(people) {
+        let list = document.getElementById("listOfPeople");
+        people.forEach(function(name) {
+            let li = document.createElement("li");
+            let n = document.createTextNode(`${name.name} ${name.surname.toUpperCase()}, ${name.country}`);
+            li.appendChild(n);
+            list.appendChild(li);
+        });
+    }
+</script>
+</html>

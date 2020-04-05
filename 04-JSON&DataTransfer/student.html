@@ -3,16 +3,30 @@
 	<head>
 		<title>Student</title>
 		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	</head>
 	<body>
 		<h1>Student</h1>
 		<p>Open a console and then click the button</p>
-		<input type="button" value="Display student's data">
+		<input class="personalDataBtn" type="button" value="Display student's data">
 		<p id="personalData"></p>
 
 		<script>
-
+			$(".personalDataBtn").on('click', function(){
+				getPersonalData();
+			});
+			function getPersonalData() {
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', 'https://raw.githubusercontent.com/paczarny/bai/solutions/04-JSON%26DataTransfer/personal.json');
+				xhr.onreadystatechange = function() { setPersonalData(this); };
+				xhr.send();
+			}
+			function setPersonalData(r) {
+				if(r.readyState === r.DONE && r.status === 200) {
+					let obj = JSON.parse(r.responseText);
+					$("#personalData").text(`${obj.name} ${obj.surname}`);
+				}
+			}
 		</script>
-
 	</body>
 </html>

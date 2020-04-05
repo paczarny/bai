@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Last 10 gold quotations</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<body>
+    <canvas id="myChart"></canvas>
+</body>
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Gold quotations',
+                backgroundColor: 'rgb(200, 150, 190)',
+                borderColor: 'rgb(255, 190, 132)',
+                data: []
+            }]
+        },
+        options: {}
+    });
+    function doFetch() {
+        fetch("http://api.nbp.pl/api/cenyzlota/last/10")
+            .then((response) => response.json())
+            .then((responseJson) => {
+                chart.data.labels = responseJson.map( e => e.data);
+                chart.data.datasets.forEach((dataset) => {
+                    dataset.data = responseJson.map( e => e.cena);
+                });
+                chart.update();
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+    }
+    doFetch();
+</script>
+</html>

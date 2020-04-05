@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Current exchange rates</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <th>Waluta</th>
+            <th>Kupno</th>
+            <th>Sprzedaz</th>
+        </thead>
+        <tbody></tbody>
+    </table>
+</body>
+<script>
+    const currencies = ["EUR", "USD", "GBP"];
+    const nbpApiUrl = "http://api.nbp.pl/api/exchangerates/rates/C/";
+    (function () {
+        currencies.forEach(function (value) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () { appendCurrency(this) };
+            xhr.open('GET', nbpApiUrl + value);
+            xhr.send();
+        });
+    })();
+    function appendCurrency(r) {
+        if(r.readyState === r.DONE && r.status === 200) {
+            let obj = JSON.parse(r.responseText);
+            document.querySelector('table tbody').appendChild(createTableRow(obj.code, obj.rates[0].ask, obj.rates[0].bid));
+        }
+    }
+    function createTableRow(curVal, askVal, bidVal) {
+        let currency = document.createElement('td');
+        currency.innerText = curVal;
+        let ask = document.createElement('td');
+        ask.innerText = askVal;
+        let bid = document.createElement('td');
+        bid.innerText = bidVal;
+        let tr = document.createElement('tr');
+        tr.append(currency, ask, bid);
+        return tr;
+    }
+</script>
+</html>
