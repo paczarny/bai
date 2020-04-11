@@ -1,37 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" >
+<meta charset="UTF-8">
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
 <body>
-  <script>
-    var app = new Vue({
-      el: '#app',
-      data: {
-        films: [
-          {
-            language: 'Python',
-            popularity: 25.95
-          },
-          {
-            language: 'Java',
-            popularity: 21.42
-          },
-          {
-            language: 'JavaScript',
-            popularity: 8.26
-          },
-          {
-            language: 'C#',
-            popularity: 7.62
-          },
-          {
-            language: 'Php',
-            popularity: 7.37
-          }
-        ] 
-      }
-    });
-  </script>
+<div id="app">
+</div>
+<div style="width: 400px; height: 400px">
+    <canvas id="myChart"></canvas>
+</div>
 </body>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            languages: [
+                {
+                    language: 'Python',
+                    popularity: 25.95
+                },
+                {
+                    language: 'Java',
+                    popularity: 21.42
+                },
+                {
+                    language: 'JavaScript',
+                    popularity: 8.26
+                },
+                {
+                    language: 'C#',
+                    popularity: 7.62
+                },
+                {
+                    language: 'Php',
+                    popularity: 7.37
+                }
+            ]
+        },
+        computed: {
+            getSorted: function() {
+                return this.languages.sort( (a, b) => a.popularity - b.popularity)
+            },
+            getLanguages: function () {
+                return this.getSorted.map( el => el.language);
+            },
+            getPopularity: function () {
+                return this.getSorted.map( el => el.popularity);
+            }
+        },
+        methods: {
+            createChart: function () {
+                console.log(this.getPopularity);
+                const ctx = document.getElementById('myChart');
+                const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: this.getLanguages,
+                        datasets: [{
+                            label: 'Language popularity',
+                            data: this.getPopularity,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            },
+        },
+        mounted() {
+            this.createChart();
+        }
+    });
+</script>
 </html>

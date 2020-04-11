@@ -3,7 +3,33 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+    }
+    .card {
+        width: 400px;
+        text-align: center;
+        border: black solid 1px;
+    }
+</style>
 <body>
+
+<div class="container">
+    <div id="app" class="card">
+        <p> {{ company.toUpperCase() }} </p>
+        <p> {{ address }} </p>
+        <p> {{ postcode + city }} </p>
+        <p> tel. {{ landline + ', ' + mobile }} </p>
+        <p><a :href="web">{{ web }}</a></p>
+    </div>
+</div>
+
+
   <script>
     var app = new Vue({
       el: '#app',

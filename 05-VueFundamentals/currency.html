@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <title>Average currency exchange rate.</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        td {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <table>
+        <thead>
+        <th>Currency</th>
+        <th>Code</th>
+        <th>Mid</th>
+        </thead>
+        <tbody>
+        <tr v-for="rate in rates">
+            <td>{{ rate.currency }}</td>
+            <td>{{ rate.code }}</td>
+            <td>{{ rate.mid }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            rates: []
+        },
+        beforeCreate() {
+            fetch('http://api.nbp.pl/api/exchangerates/tables/A')
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    this.rates.push(...data[0].rates);
+                });
+        }
+    });
+</script>
+</html>
