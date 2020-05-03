@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <architecture v-for="item in items" v-bind:item="item"></architecture>
+</div>
+</body>
+<script>
+    Vue.component('architecture', {
+        props: ['item'],
+        template: '<p>{{ item }}</p>'
+    })
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            items: ['pamiec', 'jednostka sterujaca', 'ALU', 'urzadzenia wejscia-wyjscia']
+        }
+    });
+</script>
+</html>

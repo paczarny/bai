@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+</head>
+<body>
+    <div id="app">
+    <test :dataset="random"></test>
+    </div>
+</body>
+<script>
+    Vue.component('test', {
+        props: ['dataset'],
+        template: '<canvas id="chart"></canvas>',
+        computed: {
+            getChartData: function () {
+                return {
+                    datasets: [{
+                        data: this.dataset.map(f => f.value),
+                        backgroundColor: ['#003f5c', '#58508d', '#bc5090', '#ff6361', '#ffa600']
+                    }],
+                    labels: this.dataset.map(f => f.label)
+                };
+            }
+        },
+        mounted() {
+            new Chart('chart', {
+                type: 'line',
+                data: this.getChartData,
+                options: {
+                    responsive: false
+                }
+            });
+        }
+    })
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            random: [{
+                label: 'a',
+                value: 232.232
+                },
+                {
+                    label: 'b',
+                    value: 2344.2
+                },
+                {
+                    label: 'c',
+                    value: 82.2
+                },
+                {
+                    label: 'd',
+                    value: 98.2
+                }]
+        },
+
+    });
+</script>
+</html>

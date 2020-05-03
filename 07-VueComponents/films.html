@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <movie title="Buntownik z wyboru" director="Gusa Van Santa" production="1997"></movie>
+    <movie title="Władca pierścieni" director="Petera Jackson" production="2001"></movie>
+    <movie title="Milczenie owiec" director="Jonathan Demme" production="1991"></movie>
+</div>
+</body>
+<script>
+    Vue.component('movie', {
+        props: {
+            title: String,
+            director: String,
+            production: Number,
+        },
+        template: `<div>
+                    Tytuł: {{ title }} <br>
+                    Reżyser: {{ director }} <br>
+                    Rok produkcji: {{ production }}
+                  </div>`
+    })
+
+    var app = new Vue({
+        el: '#app'
+    });
+</script>
+</html>

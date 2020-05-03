@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <counter></counter>
+</div>
+</body>
+<script>
+    Vue.component('counter', {
+        template: `<div>
+      <span>{{ counter }}</span><br>
+      <input type="button" v-on:click="counter += 1" value="add"><br>
+      <input type="button" v-on:click="counter -= 1" value="substract">
+      </div>`,
+        data: function () {
+            return {
+                counter: 0
+            }
+        },
+    });
+    var app = new Vue({
+        el: '#app'
+    });
+</script>
+</html>

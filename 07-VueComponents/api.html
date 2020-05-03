@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <covid19 country="poland"></covid19>
+    <covid19 country="germany"></covid19>
+    <covid19 country="italy"></covid19>
+</div>
+</body>
+<script>
+    Vue.component('covid19', {
+        props: ['country'],
+        data: function () {
+            return {
+                covidInfo: null
+            }
+        },
+        template: '<p v-if="covidInfo">Iloś przypadków w {{country}} wynosi: {{covidInfo.Cases }}</p>',
+        mounted() {
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+            let self = this;
+            xhr.addEventListener("readystatechange", function() {
+                if(this.readyState === 4 && this.status === 200) {
+                    console.log((JSON.parse(this.responseText)).slice(-1)[0]);
+                    self.covidInfo = (JSON.parse(this.responseText)).slice(-1)[0];
+                }
+            });
+            xhr.open("GET", `https://api.covid19api.com/total/country/${this.country}/status/confirmed`);
+            xhr.send();
+        }
+    });
+    var app = new Vue({
+        el: '#app'
+    });
+</script>
+</html>
