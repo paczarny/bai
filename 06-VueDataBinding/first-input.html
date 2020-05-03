@@ -13,6 +13,11 @@
       el: '#app',
       data: {
         name: ''
+      },
+      watch: {
+        name: function (val) {
+          console.log(val);
+        }
       }
     });
   </script>

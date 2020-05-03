@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<h1>CV</h1>
+<div id="app">
+        <p>
+            <label for="name">Imie</label><br>
+            <input id="name" v-model="cvUser.name" type="text" name="name">
+        </p>
+        <p>
+            <label for="surname">Nazwisko</label><br>
+            <input id="surname" v-model="cvUser.surname" type="text" name="surname">
+        </p>
+        <p>
+            <label for="age">Wiek</label><br>
+            <input id="age" v-model="cvUser.age" type="number" name="age">
+        </p>
+        <p>
+            <span>Płeć:</span><br>
+            <input type="radio" id="male"
+                   value="male" v-model="cvUser.sex">
+            <label for="male">Mężczyzna</label><br>
+            <input type="radio" id="female"
+                   value="female" v-model="cvUser.sex">
+            <label for="female">Kobieta</label><br>
+        </p>
+        <p>
+            <span>Wykształcenie</span><br>
+            <select v-model="cvUser.education">
+                <option selected>brak</option>
+                <option>podstawowe</option>
+                <option>średnie</option>
+                <option>wyższe</option>
+            </select>
+        </p>
+        <p>
+            <span>Umiejętności:</span><br>
+            <input type="checkbox" id= "computer-skills"
+                   value= "computer skills" v-model="cvUser.skills">
+            <label for="computer-skills">Obsługa komputera</label><br>
+
+            <input type="checkbox" id= "driving-license"
+                   value= "driving license" v-model="cvUser.skills">
+            <label for="driving-license">Prawo jazdy</label><br>
+
+            <input type="checkbox" id= "creativity"
+                   value= "creativity" v-model="cvUser.skills">
+            <label for="creativity">Kreatywność</label><br>
+
+            <input type="checkbox" id= "team-player"
+                   value= "team player" v-model="cvUser.skills">
+            <label for="team-player">Praca w zespole</label><br>
+        </p>
+        <p>
+            <input type="button" value="Zapisz" v-on:click="save">
+        </p>
+        <p>
+            <input type="button" value="Wczytaj" v-on:click="read">
+        </p>
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            cvUser: {
+                name: '',
+                surname: '',
+                age: 0,
+                sex: '',
+                education: '',
+                skills: [],
+            }
+        },
+        methods: {
+            save: function (e) {
+                localStorage.setItem('cVuser', JSON.stringify(this.cvUser));
+            },
+            read: function () {
+                this.cvUser = JSON.parse(localStorage.getItem('cVuser'));
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

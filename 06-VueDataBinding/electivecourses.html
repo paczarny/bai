@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<h1>Wybierz przedmioty</h1>
+<div id="app">
+    <input type="checkbox" id= "bai"
+           value= "bai" v-model="courses">
+    <label for="bai">Bogate aplikacje internetowe</label><br>
+    <input type="checkbox" id= "discrete_mathematics"
+           value= "discrete mathematics" v-model="courses">
+    <label for="discrete_mathematics">Matematyka dyskretna</label><br>
+    <input type="checkbox" id= "computer_simulations"
+           value= "computer simulations" v-model="courses">
+    <label for="computer_simulations">Symulacje komputerowe</label><br>
+    <input type="checkbox" id= "data_warehouses"
+           value= "data warehouses" v-model="courses">
+    <label for="data_warehouses">Hurtownie danych</label><br>
+    <input type="checkbox" id= "computer_graphics"
+           value= "computer graphics" v-model="courses">
+    <label for="computer_graphics">Grafika komputerowa</label><br>
+    <p>Wybrano {{ selected }}</p>
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            courses: []
+        },
+        computed: {
+            selected: function () {
+                return this.courses.length;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
